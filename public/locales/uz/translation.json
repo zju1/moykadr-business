@@ -20,5 +20,14 @@
   "branches": "Filiallar",
   "profile": "Profil",
   "logout": "Chiqish",
-  "language": "Til"
+  "language": "Til",
+  "name": "Nomi",
+  "phone": "Telefon raqami",
+  "address": "Manzil",
+  "inn": "INN",
+  "comment": "Izoh",
+  "search": "Qidirish",
+  "create": "Yaratish",
+  "createBranch": "Filial yaratish",
+  "actions": "Amallar"
 }

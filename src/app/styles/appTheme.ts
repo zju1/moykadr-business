@@ -2,6 +2,7 @@ import { createTheme } from "@mui/material";
 import { fontName } from "../../lib/utils/fontName";
 
 export const appTheme = createTheme({
+  cssVariables: true,
   palette: {
     primary: {
       main: "#2C6EE9",
@@ -14,7 +15,7 @@ export const appTheme = createTheme({
     },
   },
   shape: {
-    borderRadius: 5,
+    borderRadius: 12,
   },
   components: {
     MuiButtonBase: {
@@ -34,11 +35,20 @@ export const appTheme = createTheme({
       variants: [
         {
           props: {
+            size: "large",
+          },
+          style: () => ({
+            font: fontName.onest("600 16px"),
+            height: "48px",
+          }),
+        },
+        {
+          props: {
             size: "medium",
           },
           style: () => ({
             font: fontName.onest("500 18px"),
-            height: "50px",
+            height: "45px",
           }),
         },
         {
@@ -47,7 +57,7 @@ export const appTheme = createTheme({
           },
           style: () => ({
             font: fontName.onest("400 15px"),
-            height: "40px",
+            height: "35px",
           }),
         },
       ],
@@ -55,7 +65,7 @@ export const appTheme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          font: fontName.onest("500 14px"),
+          font: fontName.onest("400 14px"),
         },
       },
     },
@@ -74,7 +84,7 @@ export const appTheme = createTheme({
             size: "medium",
           },
           style: () => ({
-            font: fontName.onest("500 18px"),
+            font: fontName.onest("400 14px"),
             height: "45px",
           }),
         },

@@ -7,6 +7,11 @@ import { persistor, store } from "./store/store.config";
 import { PersistGate } from "redux-persist/integration/react";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
+import { LicenseInfo } from "@mui/x-license-pro";
+
+LicenseInfo.setLicenseKey(
+  "8e9501f02eecc690bf1d73da2d6ef68aTz04NTY1NCxFPTE3NDExNjI5MDgwMDAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI="
+);
 
 export default function App() {
   return (

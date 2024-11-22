@@ -20,5 +20,14 @@
   "branches": "Филиалы",
   "profile": "Профиль",
   "logout": "Выйти",
-  "language": "Язык"
+  "language": "Язык",
+  "name": "Название",
+  "phone": "Телефон",
+  "address": "Адрес",
+  "inn": "ИНН",
+  "comment": "Комментарий",
+  "search": "Поиск",
+  "create": "Создать",
+  "createBranch": "Создать филиал",
+  "actions": "Действии"
 }
