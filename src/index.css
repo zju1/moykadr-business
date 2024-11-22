@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Geologica Variable", sans-serif;
+}
+
+input:-webkit-autofill {
+  box-shadow: none !important;
+  padding: 9px 14px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  appearance: initial !important;
+}
