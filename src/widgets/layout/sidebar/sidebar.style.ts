@@ -62,7 +62,7 @@ export const SidebarLink = styled(NavLink)(({ theme }) => ({
     },
   },
   ".label": {
-    font: fontName.unbounded("300 14px"),
+    font: fontName.unbounded("500 12px"),
   },
   ":hover": {
     ".icon": {

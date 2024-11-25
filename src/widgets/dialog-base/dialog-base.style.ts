@@ -3,7 +3,7 @@ import { fontName } from "../../lib/utils/fontName";
 
 export const DialogBaseWrapper = styled(Dialog)(({ theme }) => ({
   ".MuiDialog-scrollPaper": {
-    background: "rgba(0,0,0,0.7)",
+    background: "rgba(0,0,0,0.3)",
   },
   ".MuiDialog-paper": {
     minWidth: "500px",

@@ -30,6 +30,22 @@ export const configApi = createApi({
       }),
       invalidatesTags: ["BRANCHES"],
     }),
+    updateBranch: builder.mutation<BaseApi<Branch>, BranchDTO>({
+      query: (body) => ({
+        url: "branch",
+        body,
+        method: "PUT",
+      }),
+      invalidatesTags: ["BRANCHES"],
+    }),
+    deleteBranch: builder.mutation<BaseApi<Branch>, RequestParamsType>({
+      query: (params) => ({
+        url: "branch",
+        params,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["BRANCHES"],
+    }),
     getBranches: builder.query<BaseApi<Branch[]>, RequestParamsType>({
       query: (params) => ({
         url: "branches",
@@ -41,4 +57,9 @@ export const configApi = createApi({
   }),
 });
 
-export const { useCreateBranchMutation, useGetBranchesQuery } = configApi;
+export const {
+  useCreateBranchMutation,
+  useGetBranchesQuery,
+  useUpdateBranchMutation,
+  useDeleteBranchMutation,
+} = configApi;

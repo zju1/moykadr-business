@@ -19,11 +19,16 @@ import { reducer } from "./reducer";
 import { authMiddleWare } from "./middlewares/authMiddleware";
 import { envVars } from "../../config/env";
 import { configApi } from "./services/config.service";
+import { employeesApi } from "./services/employees.service";
 
 const persistConfig: PersistConfig<any> = {
   key: "root",
   storage,
-  blacklist: [authApi.reducerPath, configApi.reducerPath],
+  blacklist: [
+    authApi.reducerPath,
+    configApi.reducerPath,
+    employeesApi.reducerPath,
+  ],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer as any);
@@ -36,7 +41,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authApi.middleware, configApi.middleware, authMiddleWare);
+    }).concat(
+      authApi.middleware,
+      configApi.middleware,
+      employeesApi.middleware,
+      authMiddleWare
+    );
   },
 });
 

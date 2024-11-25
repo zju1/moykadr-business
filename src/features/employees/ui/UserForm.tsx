@@ -1,12 +1,16 @@
 import { useTranslation } from "react-i18next";
-import { DialogBase } from "../../../../widgets/dialog-base/DialogBase";
 import { Button, Stack } from "@mui/material";
-import { FormField } from "../../../../lib/shared/FormField";
-import { requiredRule } from "../../../../config/rules";
-import { useBranchForm } from "../api/useBranchForm";
-import { PhoneField } from "../../../../lib/shared/PhoneField";
+import { useUserForm } from "../api/useUserForm";
+import { DialogBase } from "../../../widgets/dialog-base/DialogBase";
+import { FormField } from "../../../lib/shared/FormField";
+import { requiredRule } from "../../../config/rules";
+import { PhoneField } from "../../../lib/shared/PhoneField";
+import { PasswordField } from "../../../lib/shared/PasswordField";
+import type { UserDTO } from "../model/UserDTO";
+import { useBranchList } from "../../settings";
+import { FormMultiSelect } from "../../../lib/shared/form-select/FormMultiSelect";
 
-export function BranchForm() {
+export function UserForm() {
   const { t } = useTranslation();
   const {
     onSubmit,
@@ -15,21 +19,22 @@ export function BranchForm() {
     control,
     currentEntity,
     isBeingMutated,
-  } = useBranchForm();
+  } = useUserForm();
+  const { data: branches } = useBranchList();
 
   return (
     <DialogBase
       open={open}
       onClose={handleClose}
-      header={t(currentEntity ? "updateBranch" : "createBranch")}
+      header={t(currentEntity ? "updateEmployee" : "createEmployee")}
     >
       <Stack pt="24px" gap="24px">
         <Stack gap="12px">
           <FormField
             rules={{ ...requiredRule }}
             control={control}
-            name="name"
-            label={t("name")}
+            name="full_name"
+            label={t("fullName")}
           />
           <PhoneField
             rules={{ ...requiredRule }}
@@ -40,20 +45,24 @@ export function BranchForm() {
           <FormField
             rules={{ ...requiredRule }}
             control={control}
-            name="address"
-            label={t("address")}
+            name="login"
+            label={t("username")}
           />
-          <FormField
+          <PasswordField
             rules={{ ...requiredRule }}
             control={control}
-            name="inn"
-            label={t("inn")}
+            name="password"
+            label={t("password")}
           />
-          <FormField
+          <FormMultiSelect<UserDTO, { username: string }>
             rules={{ ...requiredRule }}
             control={control}
-            name="comment"
-            label={t("comment")}
+            name="allowed_branches"
+            label={t("allowedBranches")}
+            options={branches?.data.map((item) => ({
+              label: item.name,
+              value: item.id,
+            }))}
           />
         </Stack>
         <Button

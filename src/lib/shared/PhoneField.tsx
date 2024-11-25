@@ -5,16 +5,16 @@ import {
 } from "react-hook-form";
 import {
   FormHelperText,
-  IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   Stack,
+  Typography,
   type OutlinedInputProps,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useMask } from "@react-input/mask";
+import { phoneFormatOptions } from "../../config/phone-format";
 
 export type FormFieldProps<T extends FieldValues> = UseControllerProps<T> &
   Omit<OutlinedInputProps, "value" | "defaultValue"> & {
@@ -22,7 +22,7 @@ export type FormFieldProps<T extends FieldValues> = UseControllerProps<T> &
     label?: string;
   };
 
-export function PasswordField<T extends FieldValues>({
+export function PhoneField<T extends FieldValues>({
   name,
   control,
   defaultValue,
@@ -32,7 +32,7 @@ export function PasswordField<T extends FieldValues>({
   label,
   ...props
 }: FormFieldProps<T>) {
-  const [isPassword, setIsPassword] = useState(true);
+  const inputRef = useMask(phoneFormatOptions);
   const {
     field: { value, onChange: onFieldChange, ...fieldProps },
     fieldState,
@@ -47,6 +47,7 @@ export function PasswordField<T extends FieldValues>({
   const errorMessage = fieldState.error?.message?.split("-");
   const [message, variable, errorValue] = errorMessage || [];
   const { t } = useTranslation();
+
   const helperText = fieldState.error
     ? t(
         message as string,
@@ -62,25 +63,19 @@ export function PasswordField<T extends FieldValues>({
           {...fieldProps}
           {...props}
           value={value}
+          inputRef={inputRef}
+          startAdornment={
+            <InputAdornment position="start">
+              <Typography>+998</Typography>
+            </InputAdornment>
+          }
           size={props.size || "medium"}
-          type={isPassword ? "password" : "text"}
           error={!!fieldState.error}
           defaultValue={defaultValue}
           onChange={(event) => {
             onFieldChange(event);
             onChange?.(event);
           }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                size="small"
-                tabIndex={-1}
-                onClick={() => setIsPassword(!isPassword)}
-              >
-                {isPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
         />
         {helperText && (
           <FormHelperText error={!!errorMessage}>{helperText}</FormHelperText>

@@ -17,13 +17,12 @@ export function CrudHeader(props: CrudHeaderProps) {
             <Search />
           </InputAdornment>
         }
-        size="small"
+        size="medium"
         placeholder={t("search")}
       />
       <Button
         onClick={() => props.onCreate?.()}
         startIcon={<Add />}
-        size="small"
         variant="contained"
       >
         {t("create")}

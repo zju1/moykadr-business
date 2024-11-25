@@ -11,7 +11,8 @@ export const SPWrapper = styled("div")(({ theme }) => ({
 export const SPHeader = styled("header")(({ theme }) => ({
   display: "grid",
   backgroundColor: theme.palette.primary.main,
-  backgroundSize: "500px auto",
+  backgroundImage: "url(/grid.svg)",
+  backgroundSize: "400px auto",
   backgroundRepeat: "repeat",
   ".content": {
     padding: "12px",
@@ -27,7 +28,7 @@ export const SPSheet = styled("div")(({ theme }) => ({
   maxWidth: "470px",
   margin: "0 auto",
   background: theme.palette.background.paper,
-  borderRadius: theme.shape.borderRadius,
+  borderRadius: "30px",
   marginTop: "-10vh",
   padding: "36px",
   display: "grid",
@@ -41,12 +42,13 @@ export const SPSheet = styled("div")(({ theme }) => ({
 
 export const SPFormHeader = styled("div")(({ theme }) => ({
   display: "grid",
+  gap: "4px",
   h1: {
-    font: fontName.geologica("600 24px"),
+    font: fontName.unbounded("500 20px"),
     color: theme.palette.text.primary,
   },
   p: {
-    font: fontName.geologica("300 14px"),
+    font: fontName.unbounded("300 12px"),
     color: theme.palette.text.secondary,
   },
 }));

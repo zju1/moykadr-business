@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { SidebarMenu, SidebarUserWrapper } from "./sidebar-user.style";
 import { Divider, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
@@ -8,6 +8,11 @@ import {
   CheckRounded,
   LogoutRounded,
 } from "@mui/icons-material";
+import { useAppDispatch } from "../../../../app/store/store.config";
+import { useConfirm } from "material-ui-confirm";
+import { setUser } from "../../../../app/store/slices/auth.slice";
+import { resetUi } from "../../../../app/store/slices/ui.slice";
+import { phoneUtils } from "../../../../lib/utils/phoneUtils";
 
 export function SidebarUser() {
   const { user } = useAuth();
@@ -16,6 +21,19 @@ export function SidebarUser() {
     t,
     i18n: { language, changeLanguage },
   } = useTranslation();
+  const dispatch = useAppDispatch();
+  const confirm = useConfirm();
+
+  const handleLogout = useCallback(() => {
+    confirm({
+      title: t("areYouSure"),
+      description: t("logoutWarning"),
+    }).then(() => {
+      dispatch(setUser(null));
+      dispatch(resetUi());
+      localStorage.clear();
+    });
+  }, [confirm, dispatch, t]);
 
   return (
     <>
@@ -23,7 +41,7 @@ export function SidebarUser() {
         <img src="/boss.jpg" alt="John Doe" />
         <div className="user-info">
           <h1>{user?.full_name}</h1>
-          <p>{user?.phone}</p>
+          <p>{phoneUtils.formatPhoneNumber(user?.phone || "")}</p>
         </div>
       </SidebarUserWrapper>
       <SidebarMenu
@@ -50,7 +68,7 @@ export function SidebarUser() {
           <ListItemText primary="Русский язык" />
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutRounded />
           </ListItemIcon>

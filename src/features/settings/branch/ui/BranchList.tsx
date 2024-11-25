@@ -3,13 +3,15 @@ import { AppTable } from "../../../../widgets";
 import { useBranchList } from "../api/useBranchList";
 import { GridActionsCellItem } from "@mui/x-data-grid-pro";
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { useBranchForm } from "../api/useBranchForm";
 
 export function BranchList() {
   const { data, loading } = useBranchList();
+  const { handleOpen, handleDelete, deleteLoading } = useBranchForm();
   const { t } = useTranslation();
   return (
     <AppTable
-      loading={loading}
+      loading={loading || deleteLoading}
       columns={[
         {
           field: "id",
@@ -66,11 +68,16 @@ export function BranchList() {
           maxWidth: 80,
           minWidth: 80,
           type: "actions",
-          getActions: () => [
-            <GridActionsCellItem icon={<EditRounded />} label={t("edit")} />,
+          getActions: ({ id }) => [
+            <GridActionsCellItem
+              onClick={() => handleOpen(id)}
+              icon={<EditRounded />}
+              label={t("edit")}
+            />,
             <GridActionsCellItem
               icon={<DeleteRounded />}
               label={t("delete")}
+              onClick={() => handleDelete(id)}
             />,
           ],
         },

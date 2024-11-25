@@ -38,11 +38,10 @@ export const SidebarMenu = styled(Menu)(() => ({
   ".MuiMenu-paper": {
     width: 240,
     boxShadow: "none",
-    borderRadius: "16px",
     padding: "0 6px",
 
     ".MuiMenuItem-root": {
-      borderRadius: "12px",
+      borderRadius: "8px",
       padding: "10px 12px",
       height: "40px",
       ":hover": {

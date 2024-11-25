@@ -52,7 +52,6 @@ export function SignInPage() {
               label={t("username")}
               placeholder={t("username")}
               rules={{ ...requiredRule }}
-              size="small"
             />
             <PasswordField
               control={control}
@@ -60,13 +59,11 @@ export function SignInPage() {
               label={t("password")}
               placeholder={t("password")}
               rules={{ ...requiredRule }}
-              size="small"
             />
             <Button
               onClick={onSubmit}
               variant="contained"
               sx={{ marginTop: "24px" }}
-              size="small"
               disabled={isLoading}
             >
               {t("signIn")}

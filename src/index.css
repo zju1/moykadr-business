@@ -6,9 +6,21 @@
 }
 
 input:-webkit-autofill {
-  box-shadow: none !important;
+  box-shadow: 0 0 100px transparent inset !important;
+  caret-color: black !important;
   padding: 12px 14px !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  appearance: initial !important;
+  animation: none !important  ;
+  -webkit-text-fill-color: var(--mui-palette-text-primary) !important;
+}
+
+.confirmDialog {
+  .MuiDialog-paper {
+    border-radius: 30px;
+    max-width: 350px;
+
+    .MuiDialogTitle-root {
+      font: 400 16px Unbounded, sans-serif;
+      color: var(--mui-palette-text-primary);
+    }
+  }
 }

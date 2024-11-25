@@ -23,9 +23,17 @@ export const appTheme = createTheme({
         disableRipple: true,
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: () => ({
+          boxShadow: "none",
+        }),
+      },
+    },
     MuiButton: {
       defaultProps: {
         disableElevation: true,
+        size: "medium",
       },
       styleOverrides: {
         root: {
@@ -70,6 +78,9 @@ export const appTheme = createTheme({
       },
     },
     MuiOutlinedInput: {
+      defaultProps: {
+        size: "medium",
+      },
       styleOverrides: {
         root: ({ theme }) => ({
           background: theme.palette.background.paper,

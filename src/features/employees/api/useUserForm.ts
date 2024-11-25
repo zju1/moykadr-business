@@ -1,49 +1,49 @@
-import type { BranchDTO } from "../model/BranchDTO";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useBranchList } from "./useBranchList";
 import { useCallback, useEffect } from "react";
-import {
-  useCreateBranchMutation,
-  useDeleteBranchMutation,
-  useUpdateBranchMutation,
-} from "../../../../app/store/services/config.service";
-import { generateParams } from "../../../../lib/utils/generateParams";
+
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import { phoneUtils } from "../../../../lib/utils/phoneUtils";
 import { useConfirm } from "material-ui-confirm";
-import { formatPhoneValue } from "../../../../config/phone-format";
+import type { UserDTO } from "../model/UserDTO";
+import { generateParams } from "../../../lib/utils/generateParams";
+import {
+  useCreateEmployeeMutation,
+  useDeleteEmployeeMutation,
+  useGetEmployeeByIdQuery,
+  useUpdateEmployeeMutation,
+} from "../../../app/store/services/employees.service";
+import { phoneUtils } from "../../../lib/utils/phoneUtils";
+import { formatPhoneValue } from "../../../config/phone-format";
 
-const defaultValues: BranchDTO = {
-  name: "",
+const defaultValues: UserDTO = {
+  allowed_branches: [],
+  full_name: "",
+  login: "",
+  password: "",
   phone: "",
-  address: "",
-  inn: "",
-  comment: "",
 };
-const entity = generateParams("branch");
+const entity = generateParams("user");
 
-export function useBranchForm() {
+export function useUserForm() {
   const { t } = useTranslation();
 
-  const { data: dataList } = useBranchList();
-
   const [createEntity, { isLoading: createLoading }] =
-    useCreateBranchMutation();
+    useCreateEmployeeMutation();
 
   const [updateEntity, { isLoading: updateLoading }] =
-    useUpdateBranchMutation();
+    useUpdateEmployeeMutation();
 
   const [deleteEntity, { isLoading: deleteLoading }] =
-    useDeleteBranchMutation();
+    useDeleteEmployeeMutation();
 
   const confirm = useConfirm();
 
   const isBeingMutated = createLoading || updateLoading;
 
   const [params, setParams] = useSearchParams();
-  const { control, handleSubmit, reset, clearErrors } = useForm<BranchDTO>({
+  const { control, handleSubmit, reset, clearErrors } = useForm<UserDTO>({
     defaultValues,
   });
 
@@ -51,9 +51,9 @@ export function useBranchForm() {
 
   const currentEntity = params.get(entity.current);
 
-  const currentEntityData = dataList?.data.find(
-    (item) => item.id === Number(currentEntity)
-  );
+  const { data: currentEntityData } = useGetEmployeeByIdQuery({
+    id: currentEntity,
+  });
 
   const handleClose = useCallback(() => {
     params.delete(entity.form);
@@ -74,14 +74,17 @@ export function useBranchForm() {
     [params, setParams]
   );
 
-  const onSubmit = handleSubmit(async (data: BranchDTO) => {
+  const onSubmit = handleSubmit(async (data: UserDTO) => {
     const method = currentEntity ? updateEntity : createEntity;
-    const successMessage = currentEntity ? "changesSaved" : "branchCreated";
+    const successMessage = currentEntity ? "changesSaved" : "employeeCreated";
 
     try {
       await method({
         ...data,
         phone: phoneUtils.clearPhoneNumber(data.phone),
+        allowed_branches: data.allowed_branches.map((item: any) => ({
+          id: item,
+        })),
       }).unwrap();
       toast.success(t(successMessage));
       handleClose();
@@ -95,7 +98,7 @@ export function useBranchForm() {
     async (id: number | string) => {
       confirm({
         title: t("areYouSure"),
-        description: t("branchDeleteWarning"),
+        description: t("employeeDeleteWarning"),
       }).then(async () => {
         try {
           await deleteEntity({ id }).unwrap();
@@ -109,10 +112,19 @@ export function useBranchForm() {
   );
 
   useEffect(() => {
-    if (currentEntity && open && currentEntityData) {
+    if (
+      currentEntity &&
+      open &&
+      currentEntityData?.data &&
+      currentEntityData?.data.length > 0
+    ) {
+      const currentEntityValue = currentEntityData.data[0];
       reset({
-        ...currentEntityData,
-        phone: formatPhoneValue(currentEntityData.phone!),
+        ...currentEntityValue,
+        phone: formatPhoneValue(currentEntityValue.phone),
+        allowed_branches: currentEntityValue.allowed_branches.map(
+          (item) => item.id
+        ) as any,
       });
     }
   }, [currentEntity, reset, open, currentEntityData]);
