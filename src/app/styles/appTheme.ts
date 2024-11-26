@@ -64,8 +64,8 @@ export const appTheme = createTheme({
             size: "small",
           },
           style: () => ({
-            font: fontName.onest("400 15px"),
-            height: "35px",
+            font: fontName.onest("500 12px"),
+            height: "30px",
           }),
         },
       ],

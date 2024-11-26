@@ -47,5 +47,9 @@
   "save": "Saqlash",
   "allowedBranches": "Ruxsat etilgan filiallar",
   "choose": "Tanlash",
-  "clear": "Tozalash"
+  "clear": "Tozalash",
+  "radius": "Radius",
+  "branchLocation": "Filial joylashuvi",
+  "meter": "metr",
+  "branchRadiusHint": "Radius bu filial joylashuv nuqtasidan filial hududi kengligi hisoblanadi"
 }

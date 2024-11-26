@@ -4,6 +4,7 @@ import { useBranchList } from "../api/useBranchList";
 import { GridActionsCellItem } from "@mui/x-data-grid-pro";
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { useBranchForm } from "../api/useBranchForm";
+import { phoneUtils } from "../../../../lib/utils/phoneUtils";
 
 export function BranchList() {
   const { data, loading } = useBranchList();
@@ -36,9 +37,10 @@ export function BranchList() {
         {
           field: "phone",
           headerName: t("phone"),
-          minWidth: 150,
+          minWidth: 170,
           disableColumnMenu: true,
           sortable: false,
+          valueFormatter: phoneUtils.formatPhoneNumber,
         },
         {
           field: "address",

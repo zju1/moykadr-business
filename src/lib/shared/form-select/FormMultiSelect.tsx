@@ -4,7 +4,6 @@ import {
   useController,
 } from "react-hook-form";
 import {
-  Button,
   FormHelperText,
   IconButton,
   InputAdornment,
@@ -73,10 +72,19 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
   const filteredOptions = useMemo(
     () =>
       options?.filter((item) =>
-        item.label.toLowerCase().includes(search.toLowerCase())
+        item.label
+          .toLowerCase()
+          .replace(/[ -/]/gi, "")
+          .includes(search.toLowerCase().replace(/[ -/]/gi, ""))
       ),
     [options, search]
   );
+
+  useEffect(() => {
+    if (filteredOptions && filteredOptions?.length > 0) {
+      setDefaultFocused(0);
+    }
+  }, [filteredOptions]);
 
   const helperText = fieldState.error
     ? t(
@@ -91,10 +99,10 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
       if (
         (["ArrowDown", "ArrowUp", "Enter", "Space"].includes(key) ||
           keyCode === 32) &&
-        options
+        filteredOptions
       ) {
         event.preventDefault();
-        const lastItem = options?.length - 1;
+        const lastItem = filteredOptions?.length - 1;
         switch (key) {
           case "ArrowDown": {
             if (defaultFocused === lastItem) {
@@ -113,7 +121,7 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
             break;
           }
           default: {
-            const selectedItem = options[defaultFocused].value;
+            const selectedItem = filteredOptions[defaultFocused].value;
             const includes = value.includes(selectedItem);
             onFieldChange({
               target: {
@@ -129,7 +137,7 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
         }
       }
     },
-    [defaultFocused, name, onFieldChange, options, value]
+    [defaultFocused, name, onFieldChange, filteredOptions, value]
   );
 
   useEffect(() => {
@@ -175,10 +183,11 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
           PaperProps={{
             sx: {
               width: btnRef.current?.clientWidth,
+              marginTop: "6px",
             },
           }}
         >
-          <Stack gap="12px">
+          <Stack>
             <Stack>
               <OutlinedInput
                 inputRef={inputRef}
@@ -208,7 +217,13 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
                 }
               />
             </Stack>
-            <Stack p="6px" sx={{ maxHeight: "400px", overflowY: "auto" }}>
+            <Stack
+              sx={{
+                maxHeight: "400px",
+                overflowY: "auto",
+                p: "6px",
+              }}
+            >
               {filteredOptions?.map((item, index) => (
                 <MenuItem
                   onClick={() => {
@@ -237,45 +252,12 @@ export function FormMultiSelect<T extends FieldValues, K = unknown>({
                     flex={1}
                   >
                     <span>{item.label}</span>
-                    {value.includes(item.value) && <Check />}
+                    {value.includes(item.value) && (
+                      <Check color="action" fontSize="small" />
+                    )}
                   </Stack>
                 </MenuItem>
               ))}
-            </Stack>
-            <Stack
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "12px",
-                padding: "6px",
-                boxShadow: "0 -5px 5px rgba(0,0,0,0.1)",
-                background: "white",
-              }}
-            >
-              <Button
-                size="small"
-                variant="outlined"
-                onClick={() =>
-                  onFieldChange({
-                    target: {
-                      name,
-                      value: [],
-                    },
-                  })
-                }
-              >
-                {t("clear")}
-              </Button>
-              <Button
-                size="small"
-                variant="contained"
-                onClick={() => {
-                  setSearch("");
-                  setAnchor(null);
-                }}
-              >
-                {t("choose")}
-              </Button>
             </Stack>
           </Stack>
         </SelectMenu>

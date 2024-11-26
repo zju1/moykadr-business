@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { DialogBase } from "../../../../widgets/dialog-base/DialogBase";
-import { Button, Stack } from "@mui/material";
+import { Button, InputAdornment, Stack } from "@mui/material";
 import { FormField } from "../../../../lib/shared/FormField";
 import { requiredRule } from "../../../../config/rules";
 import { useBranchForm } from "../api/useBranchForm";
 import { PhoneField } from "../../../../lib/shared/PhoneField";
+import { FormLocation } from "../../../../lib/shared/form-location/FormLocation";
+import { useWatch } from "react-hook-form";
 
 export function BranchForm() {
   const { t } = useTranslation();
@@ -16,6 +18,7 @@ export function BranchForm() {
     currentEntity,
     isBeingMutated,
   } = useBranchForm();
+  const { radius } = useWatch({ control });
 
   return (
     <DialogBase
@@ -25,6 +28,26 @@ export function BranchForm() {
     >
       <Stack pt="24px" gap="24px">
         <Stack gap="12px">
+          <FormLocation
+            radius={radius || 1}
+            rules={{ ...requiredRule }}
+            control={control}
+            name="latlong"
+            label={t("branchLocation")}
+            endAdornment={
+              <InputAdornment position="end"> {t("meter")} </InputAdornment>
+            }
+          />
+          <FormField
+            rules={{ ...requiredRule }}
+            control={control}
+            name="radius"
+            label={t("radius")}
+            type="number"
+            endAdornment={
+              <InputAdornment position="end"> {t("meter")} </InputAdornment>
+            }
+          />
           <FormField
             rules={{ ...requiredRule }}
             control={control}

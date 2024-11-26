@@ -21,6 +21,10 @@ const defaultValues: BranchDTO = {
   address: "",
   inn: "",
   comment: "",
+  lat: 0,
+  long: 0,
+  latlong: "",
+  radius: 0,
 };
 const entity = generateParams("branch");
 
@@ -79,9 +83,13 @@ export function useBranchForm() {
     const successMessage = currentEntity ? "changesSaved" : "branchCreated";
 
     try {
+      const [lat, lng] = data.latlong.split(",");
       await method({
         ...data,
         phone: phoneUtils.clearPhoneNumber(data.phone),
+        radius: Number(data.radius),
+        lat: Number(lat),
+        long: Number(lng),
       }).unwrap();
       toast.success(t(successMessage));
       handleClose();
@@ -113,6 +121,7 @@ export function useBranchForm() {
       reset({
         ...currentEntityData,
         phone: formatPhoneValue(currentEntityData.phone!),
+        latlong: `${currentEntityData.lat},${currentEntityData.long}`,
       });
     }
   }, [currentEntity, reset, open, currentEntityData]);

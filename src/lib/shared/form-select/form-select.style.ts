@@ -34,17 +34,17 @@ export const SelectMenu = styled(Popover)(({ theme }) => ({
   fieldset: {
     border: "none !important",
     borderRadius: `${theme.shape.borderRadius}px ${theme.shape.borderRadius}px 0 0`,
-    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+    borderBottom: `1px solid ${theme.palette.grey[200]} !important`,
   },
   ".MuiPopover-paper": {
-    boxShadow: "0 5px 20px rgba(0,0,0,0.7)",
+    boxShadow: "0 3px 12px rgba(0,0,0,0.3)",
     ".focusedItem": {
       background: theme.palette.grey[200],
     },
     ".MuiMenuItem-root": {
-      height: "45px",
+      height: "35px",
       font: fontName.onest("300 14px"),
-      borderRadius: "8px",
+      borderRadius: theme.shape.borderRadius,
     },
   },
 }));

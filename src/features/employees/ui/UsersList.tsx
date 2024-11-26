@@ -40,7 +40,7 @@ export function UsersList() {
           minWidth: 180,
           disableColumnMenu: true,
           sortable: false,
-          valueFormatter: (value) => phoneUtils.formatPhoneNumber(value!),
+          valueFormatter: phoneUtils.formatPhoneNumber,
         },
         {
           headerName: t("actions"),

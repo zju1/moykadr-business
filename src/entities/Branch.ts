@@ -10,4 +10,7 @@ export interface Branch {
   phone: string;
   comment: string;
   inn: string;
+  lat: number;
+  long: number;
+  radius: number;
 }
