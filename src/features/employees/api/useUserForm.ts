@@ -83,16 +83,13 @@ export function useUserForm() {
       await method({
         ...data,
         phone: phoneUtils.clearPhoneNumber(data.phone),
-        allowed_branches: data.allowed_branches.map((item: any) => ({
-          id: item,
-        })),
+        allowed_branches: [{ id: (data as any).allowed_branches }],
       }).unwrap();
       toast.success(t(successMessage));
       handleClose();
     } catch (error) {
       console.log(error);
     }
-    console.log(data);
   });
 
   const handleDelete = useCallback(
@@ -123,9 +120,9 @@ export function useUserForm() {
       reset({
         ...currentEntityValue,
         phone: formatPhoneValue(currentEntityValue.phone),
-        allowed_branches: currentEntityValue.allowed_branches.map(
-          (item) => item.id
-        ) as any,
+        allowed_branches: (currentEntityValue.allowed_branches
+          ? currentEntityValue.allowed_branches[0].id
+          : null) as any,
       });
     }
   }, [currentEntity, reset, open, currentEntityData]);

@@ -10,6 +10,7 @@ import type { UserDTO } from "../model/UserDTO";
 import { useBranchList } from "../../settings";
 import { FormMultiSelect } from "../../../lib/shared/form-select/FormMultiSelect";
 import { weekends } from "../../../config/weekends";
+import { FormSelect } from "../../../lib/shared/form-select/FormSelect";
 
 export function UserForm() {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ export function UserForm() {
             name="password"
             label={t("password")}
           />
-          <FormMultiSelect<UserDTO, { username: string }>
+          <FormSelect<UserDTO, { username: string }>
             rules={{ ...requiredRule }}
             control={control}
             name="allowed_branches"
