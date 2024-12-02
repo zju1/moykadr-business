@@ -5,13 +5,14 @@ import { useUsersList } from "../api/useUsersList";
 import { useUserForm } from "../api/useUserForm";
 import { AppTable } from "../../../widgets";
 import { phoneUtils } from "../../../lib/utils/phoneUtils";
+import type { Employee } from "../../../entities/Employee";
 
 export function UsersList() {
   const { data, loading } = useUsersList();
   const { handleOpen, handleDelete, deleteLoading } = useUserForm();
   const { t } = useTranslation();
   return (
-    <AppTable
+    <AppTable<Employee>
       loading={loading || deleteLoading}
       columns={[
         {
@@ -33,6 +34,14 @@ export function UsersList() {
           flex: 1,
           disableColumnMenu: true,
           sortable: false,
+        },
+        {
+          field: "allowed_branches",
+          headerName: t("branch"),
+          minWidth: 180,
+          disableColumnMenu: true,
+          sortable: false,
+          valueFormatter: (_value, row) => row.allowed_branches?.[0].name,
         },
         {
           field: "phone",

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { envVars } from "../../../config/env";
-import type { BaseApi } from "../../../@types";
+import type { BaseApi, RequestParamsType } from "../../../@types";
 import type { User } from "../../../entities/User";
 import type { SigninDTO } from "../../../features";
 
@@ -17,7 +17,13 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
+    getMe: builder.query<BaseApi<User[]>, RequestParamsType>({
+      query: (params) => ({
+        url: "userByID",
+        params,
+      }),
+    }),
   }),
 });
 
-export const { useSigninMutation } = authApi;
+export const { useSigninMutation, useGetMeQuery } = authApi;

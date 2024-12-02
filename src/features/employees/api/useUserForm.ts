@@ -120,7 +120,7 @@ export function useUserForm() {
       reset({
         ...currentEntityValue,
         phone: formatPhoneValue(currentEntityValue.phone),
-        allowed_branches: (currentEntityValue.allowed_branches
+        allowed_branches: (currentEntityValue.allowed_branches?.length > 0
           ? currentEntityValue.allowed_branches[0].id
           : null) as any,
       });

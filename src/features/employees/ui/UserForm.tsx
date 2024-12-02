@@ -60,7 +60,7 @@ export function UserForm() {
             rules={{ ...requiredRule }}
             control={control}
             name="allowed_branches"
-            label={t("allowedBranches")}
+            label={t("branch")}
             options={branches?.data.map((item) => ({
               label: item.name,
               value: item.id,
