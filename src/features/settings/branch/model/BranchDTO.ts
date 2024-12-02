@@ -9,4 +9,12 @@ export interface BranchDTO {
   long: number;
   radius: number;
   latlong: string;
+  smena: BranchShift[];
+}
+
+export interface BranchShift {
+  name: string;
+  start: string;
+  end: string;
+  id?: number;
 }

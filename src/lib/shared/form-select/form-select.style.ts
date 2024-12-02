@@ -7,9 +7,8 @@ export const FormSelectWrapper = styled(ButtonBase)(({ theme }) => ({
   textAlign: "left",
   justifyContent: "flex-start",
   padding: "0 14px",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
+  lineHeight: "20px",
+  maxHeight: "auto",
   maxWidth: "100%",
   "&.medium": {
     height: "45px",

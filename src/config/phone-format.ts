@@ -5,5 +5,10 @@ export const phoneFormatOptions = {
   replacement: { _: /\d/ },
 };
 
+export const timeFormatOptions = {
+  mask: "__:__",
+  replacement: { _: /\d/ },
+};
+
 export const formatPhoneValue = (phone: string) =>
   format(phone, phoneFormatOptions);

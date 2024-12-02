@@ -7,6 +7,7 @@ export const DialogBaseWrapper = styled(Dialog)(({ theme }) => ({
   },
   ".MuiDialog-paper": {
     minWidth: "500px",
+    maxWidth: "500px",
     borderRadius: "16px",
     boxShadow: "none",
     minHeight: "200px",

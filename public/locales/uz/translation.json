@@ -51,5 +51,17 @@
   "radius": "Radius",
   "branchLocation": "Filial joylashuvi",
   "meter": "metr",
-  "branchRadiusHint": "Radius bu filial joylashuv nuqtasidan filial hududi kengligi hisoblanadi"
+  "branchRadiusHint": "Radius bu filial joylashuv nuqtasidan filial hududi kengligi hisoblanadi",
+  "weekends": "Dam olish kunlari",
+  "weekday1": "Dushanba",
+  "weekday2": "Seshanba",
+  "weekday3": "Chorshanba",
+  "weekday4": "Payshanba",
+  "weekday5": "Juma",
+  "weekday6": "Shanba",
+  "weekday7": "Yakshanba",
+  "addShift": "Smena qo'shish",
+  "shift": "Smena",
+  "start": "Boshlanishi",
+  "end": "Tugashi"
 }

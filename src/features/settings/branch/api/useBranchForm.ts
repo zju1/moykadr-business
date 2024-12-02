@@ -1,6 +1,6 @@
 import type { BranchDTO } from "../model/BranchDTO";
 import { useSearchParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { useBranchList } from "./useBranchList";
 import { useCallback, useEffect } from "react";
 import {
@@ -14,6 +14,10 @@ import { useTranslation } from "react-i18next";
 import { phoneUtils } from "../../../../lib/utils/phoneUtils";
 import { useConfirm } from "material-ui-confirm";
 import { formatPhoneValue } from "../../../../config/phone-format";
+import {
+  denormalizeShiftShour,
+  normalizeShiftHour,
+} from "../../../../lib/utils/normalizeShiftHour";
 
 const defaultValues: BranchDTO = {
   name: "",
@@ -25,6 +29,7 @@ const defaultValues: BranchDTO = {
   long: 0,
   latlong: "",
   radius: 0,
+  smena: [],
 };
 const entity = generateParams("branch");
 
@@ -47,9 +52,23 @@ export function useBranchForm() {
   const isBeingMutated = createLoading || updateLoading;
 
   const [params, setParams] = useSearchParams();
+
   const { control, handleSubmit, reset, clearErrors } = useForm<BranchDTO>({
     defaultValues,
   });
+
+  const { append, remove, fields } = useFieldArray({
+    control,
+    name: "smena",
+  });
+
+  const addShift = useCallback(() => {
+    append({
+      end: "",
+      name: "",
+      start: "",
+    });
+  }, [append]);
 
   const open = params.get(entity.form);
 
@@ -90,6 +109,11 @@ export function useBranchForm() {
         radius: Number(data.radius),
         lat: Number(lat),
         long: Number(lng),
+        smena: data.smena.map((item) => ({
+          ...item,
+          start: normalizeShiftHour(item.start),
+          end: normalizeShiftHour(item.end),
+        })),
       }).unwrap();
       toast.success(t(successMessage));
       handleClose();
@@ -122,6 +146,11 @@ export function useBranchForm() {
         ...currentEntityData,
         phone: formatPhoneValue(currentEntityData.phone!),
         latlong: `${currentEntityData.lat},${currentEntityData.long}`,
+        smena: currentEntityData.smena.map((item) => ({
+          ...item,
+          start: denormalizeShiftShour(item.start),
+          end: denormalizeShiftShour(item.end),
+        })),
       });
     }
   }, [currentEntity, reset, open, currentEntityData]);
@@ -136,5 +165,8 @@ export function useBranchForm() {
     isBeingMutated,
     handleDelete,
     deleteLoading,
+    addShift,
+    removeShift: remove,
+    shifts: fields,
   };
 }

@@ -11,15 +11,16 @@ import {
   type OutlinedInputProps,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useMask } from "@react-input/mask";
+import { timeFormatOptions } from "../../config/phone-format";
 
 export type FormFieldProps<T extends FieldValues> = UseControllerProps<T> &
   Omit<OutlinedInputProps, "value" | "defaultValue"> & {
     helperText?: string;
     label?: string;
-    isRoundedGroup?: boolean;
   };
 
-export function FormField<T extends FieldValues>({
+export function TimeField<T extends FieldValues>({
   name,
   control,
   defaultValue,
@@ -29,6 +30,7 @@ export function FormField<T extends FieldValues>({
   label,
   ...props
 }: FormFieldProps<T>) {
+  const inputRef = useMask(timeFormatOptions);
   const {
     field: { value, onChange: onFieldChange, ...fieldProps },
     fieldState,
@@ -59,6 +61,7 @@ export function FormField<T extends FieldValues>({
           {...fieldProps}
           {...props}
           value={value}
+          inputRef={inputRef}
           size={props.size || "medium"}
           error={!!fieldState.error}
           defaultValue={defaultValue}
@@ -68,9 +71,7 @@ export function FormField<T extends FieldValues>({
           }}
         />
         {helperText && (
-          <FormHelperText className={props.size} error={!!errorMessage}>
-            {helperText}
-          </FormHelperText>
+          <FormHelperText error={!!errorMessage}>{helperText}</FormHelperText>
         )}
       </Stack>
     </Stack>

@@ -9,4 +9,5 @@ export interface UserDTO {
   login: string;
   password: string;
   allowed_branches: AllowedBranchInDTO[];
+  weekends: string[];
 }

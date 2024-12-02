@@ -77,6 +77,19 @@ export const appTheme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      variants: [
+        {
+          props: {
+            className: "small",
+          },
+          style: {
+            font: fontName.onest("400 10px"),
+            lineHeight: "14px",
+          },
+        },
+      ],
+    },
     MuiOutlinedInput: {
       defaultProps: {
         size: "medium",

@@ -9,6 +9,7 @@ import { PasswordField } from "../../../lib/shared/PasswordField";
 import type { UserDTO } from "../model/UserDTO";
 import { useBranchList } from "../../settings";
 import { FormMultiSelect } from "../../../lib/shared/form-select/FormMultiSelect";
+import { weekends } from "../../../config/weekends";
 
 export function UserForm() {
   const { t } = useTranslation();
@@ -62,6 +63,16 @@ export function UserForm() {
             options={branches?.data.map((item) => ({
               label: item.name,
               value: item.id,
+            }))}
+          />
+          <FormMultiSelect<UserDTO, { username: string }>
+            rules={{ ...requiredRule }}
+            control={control}
+            name="weekends"
+            label={t("weekends")}
+            options={weekends.map((item) => ({
+              ...item,
+              label: t(item.label),
             }))}
           />
         </Stack>

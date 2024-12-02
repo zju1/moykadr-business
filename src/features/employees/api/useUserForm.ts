@@ -23,6 +23,7 @@ const defaultValues: UserDTO = {
   login: "",
   password: "",
   phone: "",
+  weekends: [],
 };
 const entity = generateParams("user");
 
