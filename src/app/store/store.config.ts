@@ -20,6 +20,7 @@ import { authMiddleWare } from "./middlewares/authMiddleware";
 import { envVars } from "../../config/env";
 import { configApi } from "./services/config.service";
 import { employeesApi } from "./services/employees.service";
+import { reportsApi } from "./services/reports.service";
 
 const persistConfig: PersistConfig<any> = {
   key: "root",
@@ -28,6 +29,7 @@ const persistConfig: PersistConfig<any> = {
     authApi.reducerPath,
     configApi.reducerPath,
     employeesApi.reducerPath,
+    reportsApi.reducerPath,
   ],
 };
 
@@ -45,6 +47,7 @@ export const store = configureStore({
       authApi.middleware,
       configApi.middleware,
       employeesApi.middleware,
+      reportsApi.middleware,
       authMiddleWare
     );
   },

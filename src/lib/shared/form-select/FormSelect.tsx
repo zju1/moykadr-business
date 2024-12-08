@@ -58,7 +58,7 @@ export function FormSelect<T extends FieldValues, K = unknown>({
     rules,
     shouldUnregister,
   });
-  const selectedOption = options?.find((item) => item.value === value);
+  const selectedOption = options?.find((item) => item?.value === value);
   const errorMessage = fieldState.error?.message?.split("-");
   const [message, variable, errorValue] = errorMessage || [];
   const { t } = useTranslation();
@@ -213,7 +213,7 @@ export function FormSelect<T extends FieldValues, K = unknown>({
                     flex={1}
                   >
                     <span>{item.label}</span>
-                    {item.value === value && <Check />}
+                    {item.value === value && <Check fontSize="small" />}
                   </Stack>
                 </MenuItem>
               ))}

@@ -64,5 +64,20 @@
   "shift": "Smena",
   "start": "Boshlanishi",
   "end": "Tugashi",
-  "branch": "Filial"
+  "branch": "Filial",
+  "month1": "Yanvar",
+  "month2": "Fevral",
+  "month3": "Mart",
+  "month4": "Aprel",
+  "month5": "May",
+  "month6": "Iyun",
+  "month7": "Iyul",
+  "month8": "Avgust",
+  "month9": "Sentyabr",
+  "month10": "Oktyabr",
+  "month11": "Noyabr",
+  "month12": "Dekabr",
+  "year": "Yil",
+  "month": "Oy",
+  "totalHours": "Jami soatlar"
 }
