@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { envVars } from "../../../config/env";
 import type { BaseApi, RequestParamsType } from "../../../@types";
-import type { Branch } from "../../../entities/Branch";
 import type { RootState } from "../store.config";
 import type { AttendanceItem } from "../../../features/attendance/model/AttendanceDTO";
 
